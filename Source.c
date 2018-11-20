@@ -1,16 +1,15 @@
-//Vasiya
 #include<stdio.h>
 #include<conio.h>
 #include<math.h>
-void Show_2d(int *mass[], int rows, int colls);
-void Show_1d(double *mass, int n);
-void Sort(int * mass[], int rows, int colls);
-void ArifMiddle_2d(double *mass_1d, int *mass_2d[], int rows, int colls);
-double Multiple(double *mass_1d, int rows);
-void EnterMass(int *mass[], int rows, int colls);
+void showTwoDimentionalArray(int *mass[], int rows, int colls);
+void showOneDimentionalArray(double *mass, int n);
+void bubleSortInCollumns(int * mass[], int rows, int colls);
+void arifmeticalAverageInRows(double *oneDimentionalArray, int *twoDimentionalArray[], int rows, int colls);
+double multiplyArrayElements(double *oneDimentionalArray, int rows);
+void enterArray(int *mass[], int rows, int colls);
 main() {
 
-	int mass_2d[5][5] = {
+	int twoDimentionalArray[5][5] = {
 		40,72,6,92,98,
 		18,-33,-48,81,26,
 		1,-4,6,-2,0,
@@ -20,101 +19,91 @@ main() {
 
 	
 
-	int *mass_2d_p[5];
+	int *twoDimentionalArrayPointer[5];
 	for (int i = 0; i < 5; i++) {
-		mass_2d_p[i] = mass_2d[i];
+		twoDimentionalArrayPointer[i] = twoDimentionalArray[i];
 	}
 
+	showTwoDimentionalArray(twoDimentionalArrayPointer, 5, 5);
+	bubleSortInCollumns(twoDimentionalArrayPointer, 5, 5);
+	showTwoDimentionalArray(twoDimentionalArrayPointer, 5, 5);
 
-
-	//printf("Enter 5x5 array:\n");
-	//EnterMass(mass_2d_p, 5, 5);
-
-
-
-
-	Show_2d(mass_2d_p, 5, 5);
-	Sort(mass_2d_p, 5, 5);
-	Show_2d(mass_2d_p, 5, 5);
-
-	double mass_1d[5];
-	double *mass_1d_p = mass_1d;
-	printf("Arifm middle of each row:");
-	ArifMiddle_2d(mass_1d_p, mass_2d_p, 5, 5);
-	Show_1d(mass_1d_p, 5);
+	double oneDimentionalArray[5];
+	double *oneDimentionalArrayPointer = oneDimentionalArray;
+	printf("Arifmetical average of each row:");
+	arifmeticalAverageInRows(oneDimentionalArrayPointer, twoDimentionalArrayPointer, 5, 5);
+	showOneDimentionalArray(oneDimentionalArrayPointer, 5);
 
 	printf("\nArifm middle of massive above:");
-	printf(" %4.2lf", Multiple(mass_1d_p, 5));
+	printf(" %4.2lf", multiplyArrayElements(oneDimentionalArrayPointer, 5));
 
 	_getch();
 }
 
-void EnterMass(int *mass[], int rows, int colls) {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < colls; j++) {
-			scanf_s("%d", &mass[i][j]);
+void enterArray(int *twoDimentionalArray[], int rows, int colls) {
+	for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
+		for (int collumnIndex = 0; collumnIndex < colls; collumnIndex++) {
+			scanf_s("%d", &twoDimentionalArray[rowIndex][collumnIndex]);
 		}
 	}
 }
-void Show_2d(int *mass[], int rows, int colls) {
+void showTwoDimentionalArray(int *twoDimentionalArray[], int rows, int colls) {
 
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < colls; j++) {
-			printf(" %4.1d ", mass[i][j]);
+	for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
+		for (int collumnIndex = 0; collumnIndex < colls; collumnIndex++) {
+			printf(" %4.1d ", twoDimentionalArray[rowIndex][collumnIndex]);
 		}
 		printf("\n");
 	}
 	printf("\n");
 }
-void Show_1d(double *mass, int n) {
+void showOneDimentionalArray(double *oneDimentionalArray, int arrayLenth) {
 
-	for (int i = 0; i < n; i++) {
-		printf(" %4.2lf", mass[i]);
+	for (int index = 0; index < arrayLenth; index++) {
+		printf(" %4.2lf", oneDimentionalArray[index]);
 	}
 	printf("\n");
 }
-void ArifMiddle_2d(double *mass_1d, int *mass_2d[], int rows, int colls) {
-	double sum = 0;
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < colls; j++) {
-			sum += mass_2d[i][j];
+void arifmeticalAverageInRows(double *oneDimentionalArray, int *twoDimentionalArray[], int rows, int colls) {
+	double rowSum = 0;
+	for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
+		for (int collumnIndex = 0; collumnIndex < colls; collumnIndex++) {
+			rowSum += twoDimentionalArray[rowIndex][collumnIndex];
 		}
-		mass_1d[i] = sum / rows;
+		oneDimentionalArray[rowIndex] = rowSum / rows;
 
-		sum = 0;
+		rowSum = 0;
 	}
 
 }
-double Multiple(double *mass_1d, int rows) {
-	double sum = mass_1d[0];
-	for (int i = 1; i < rows; i++) {
-		sum *= mass_1d[i];
+double multiplyArrayElements(double *oneDimentionalArray, int rows) {
+	double multiplyResult = oneDimentionalArray[0];
+	for (int index = 1; index < rows; index++) {
+		multiplyResult *= oneDimentionalArray[index];
 	}
 
-	return sum;
+	return multiplyResult;
 
 }
 
+void bubleSortInCollumns(int * twoDimentionalArray[],  int rows,  int colls) {
+
+	int temporaryVariable = 0;
 
 
-void Sort(int * mass[], const int rows, const int colls) {
-
-	int tmp = 0;
-
-
-	for (int i = 0; i < rows; i++)
+	for (int rowIndex = 0; rowIndex < rows; rowIndex++)
 	{
-		for (int j = 0; j < colls; j++)
+		for (int collumnIndex = 0; collumnIndex < colls; collumnIndex++)
 		{
-			for (int k = 0; k < rows; k++)
+			for (int secondaryRowIndex = 0; secondaryRowIndex < rows; secondaryRowIndex++)
 			{
 				
-					if (mass[j][i] <  mass[k][i])
+					if (twoDimentionalArray[collumnIndex][rowIndex] <  twoDimentionalArray[secondaryRowIndex][rowIndex])
 					{
 
-						tmp = mass[j][i];
-						mass[j][i] = mass[k][i];
-						mass[k][i] = tmp;
+						temporaryVariable = twoDimentionalArray[collumnIndex][rowIndex];
+						twoDimentionalArray[collumnIndex][rowIndex] = twoDimentionalArray[secondaryRowIndex][rowIndex];
+						twoDimentionalArray[secondaryRowIndex][rowIndex] = temporaryVariable;
 
 					}
 				
